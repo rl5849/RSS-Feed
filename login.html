@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+</head>
+<body>
+<div class="main">
+    <h1>Login</h1>
+    <form action="index.php" method="post">
+        <label>Username</label>​<br>
+        <input name=​"username" placeholder=​"Username" type=​"text">​<br>
+        <label>Password</label><br>
+        <input name=​"password" type=​"password" placeholder=​"Password">​​<br>
+        <button name=​"subLogin" type=​"submit">​Login</button>
+    </form>
+
+    <br><h2>or</h2><br>
+
+    <h1>Register</h1>
+    <form action="index.php" method="post">
+        <label>Username</label>​<br>
+        <input name=​"username" placeholder=​"Username" type=​"text">​<br>
+        <label>Password</label><br>
+        <input name=​"txtNewPassword" type=​"password" placeholder=​"Password">​​<br>
+        <label>Confirm Password</label>
+        <br><input name=​"txtConfirmPassword" type=​"password" placeholder=​"Password">​​<br>
+        <button id=​"subRegister" type=​"submit">​Register</button>
+    </form>
+</div>
+
+<script>
+    //On submit clicked, capture data
+    function checkPasswordMatch() {
+        var password = $("#txtNewPassword").val();
+        var confirmPassword = $("#txtConfirmPassword").val();
+
+        if (password != confirmPassword)
+            document.getElementsByName("subRegister").disabled = true;
+        else
+            document.getElementById("subRegister").disabled = false;
+    }
+
+    $(document).ready(function () {
+        document.getElementById("subRegister").disabled = true;
+        $(checkPasswordMatch);
+    });
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+</body>
+</html>
