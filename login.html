@@ -1,64 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 </head>
 <body>
-<div class="main">
-    <h1>Login</h1>
-    <form action="index.php" method="post">
-        <label>Username</label>​<br>
-        <input name=​"username" placeholder=​"Username" type=​"text">​<br>
-        <label>Password</label><br>
-        <input name=​"password" type=​"password" placeholder=​"Password">​​<br>
-        <button name=​"subLogin" type=​"submit">​Login</button>
-    </form>
+    <div style="width: 30%; margin: auto;" class="login-form align-items-center">
 
-    <br><h2>or</h2><br>
+            <h1 class="text-center">Login</h1>
+            <form action="index.php" method="post">
+                <div class="form-group">
+                    <label for="formGroupExampleInput2">Username</label>​<br>
+                    <input id="formGroupExampleInput1" class="form-control" name=​"username" placeholder=​"Username" type=​"text">​<br>
+                </div>
+                <div class="form-group">
+                    <label for="formGroupExampleInput2">Password</label><br>
+                    <input id="formGroupExampleInput2" class="form-control" name=​"password" type=​"password" placeholder=​"Password">​​<br>
+                </div>
+                <div class="form-group">
+                    <button name=​"subLogin" type=​"submit">​Login</button>
+                </div>
+            </form>
 
-    <h1>Register</h1>
-    <form action="index.php" method="post">
-        <label>Username</label>​<br>
-        <input name=​"username" placeholder=​"Username" type=​"text">​<br>
-        <label>Password</label><br>
-        <input name=​"txtNewPassword" type=​"password" placeholder=​"Password">​​<br>
-        <label>Confirm Password</label>
-        <br><input name=​"txtConfirmPassword" type=​"password" placeholder=​"Password">​​<br>
-        <button id=​"subRegister" type=​"submit">​Register</button>
-    </form>
-</div>
+            <h2 class="text-center">or</h2>
 
+            <h1 class="text-center">Register</h1>
+            <form action="index.php" method="post">
+                <div class="form-group">
+                    <label for="formGroupExampleInput2">Username</label>​<br>
+                    <input  class="form-control" name=​"username" placeholder=​"Username" type=​"text">​<br>
+                </div>
+                <div class="form-group">
+                    <label for="formGroupExampleInput2">Password</label><br>
+                    <input  class="form-control" name=​"txtNewPassword" type=​"password" placeholder=​"Password">​​<br>
+                </div>
+                <div class="form-group">
+                    <label for="formGroupExampleInput2">Password</label><br>
+                    <input  class="form-control" name=​"txtConfirmPassword" type=​"password" placeholder=​"Password">​​<br>
+                </div>
+                <button name=​"subRegister" type=​"submit">Register</button>
+            </form>
+    </div>
+</body>
 <script>
     //On submit clicked, capture data
-    function checkPasswordMatch() {
-        var password = $("#txtNewPassword").val();
-        var confirmPassword = $("#txtConfirmPassword").val();
-
-        if (password != confirmPassword)
-            document.getElementsByName("subRegister").disabled = true;
-        else
-            document.getElementById("subRegister").disabled = false;
-    }
-
-    $(document).ready(function () {
-        document.getElementById("subRegister").disabled = true;
-        $(checkPasswordMatch);
-    });
-
-
-
-
-
-
-
-
-
+    // function checkPasswordMatch() {
+    //     var password = $("#txtNewPassword").val();
+    //     var confirmPassword = $("#txtConfirmPassword").val();
+    //
+    //     if (password != confirmPassword)
+    //         document.getElementsByName("subRegister").disabled = true;
+    //     else
+    //         document.getElementById("subRegister").disabled = false;
+    // }
+    //
+    // window.onload = (function () {
+    //     //document.getElementById("subRegister").disabled = true;
+    //     $(checkPasswordMatch);
+    // });
 
 
 </script>
-
-</body>
 </html>
