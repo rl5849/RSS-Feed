@@ -1,10 +1,10 @@
 <?php
-//{
-//  username:
-//    {password : password, favorites : [list of favs]}
-//}
 $json_data = file_get_contents('data.txt');
 $json_data = json_decode($json_data);
+
+
+echo $_POST["\"username\""];
+
 
 
 if (isset($_POST['username']) and isset($_POST['password'])){
@@ -13,10 +13,8 @@ if (isset($_POST['username']) and isset($_POST['password'])){
     if ($_POST['password'] !=  $json_data->$username->password){
         echo "<script>alert(\"Wrong password\"); window.location = '/login.html';</script>";
     }
-
-
 }
-else if (isset($_POST["\username"]) and isset($_POST["txtNewPassword"]) and isset($_POST["txtConfirmPassword"])){
+else if (isset($_POST['username']) and isset($_POST['txtNewPassword']) and isset($_POST['txtConfirmPassword'])){
     echo "<script>alert(\"Creating user\");</script>";
     if ($_POST['txtNewPassword'] == $_POST['txtConfirmPassword']){
         //create new user
@@ -28,7 +26,7 @@ else if (isset($_POST["\username"]) and isset($_POST["txtNewPassword"]) and isse
         else{
             $json_data->$username->password = addslashes($_POST['password']);
             $json_data->$username->favorites = [];
-            $fp = fopen('data.txt', 'w');
+            $fp = fopen('data.txt', 'a');
             fwrite($fp, json_encode($json_data));
             fclose($fp);
         }
@@ -38,7 +36,7 @@ else if (isset($_POST["\username"]) and isset($_POST["txtNewPassword"]) and isse
     }
 }
 else{
-    echo var_dump($_POST);
+    echo "Didnt get the data ";
     //echo "<meta http-equiv=\"refresh\" content=\"0;URL=login.php\" >";
 }
 
