@@ -1,0 +1,5 @@
+{ "USERS" : [
+    "test" :
+        { 'password' : 'dsfsdf', 'favs' : []}
+   ]
+}
