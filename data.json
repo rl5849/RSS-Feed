@@ -1,5 +1,1 @@
-{ "USERS" : [
-    "test" :
-        { 'password' : 'dsfsdf', 'favs' : []}
-   ]
-}
+{"USERS":{"test":{"username":"test","password":"dsfsdf","favs":[]},"test123":{"username":"test123","password":"123","favorites":["{\"title\":\"MLBRank%20100-51%3A%20Impressive%20young%20stars%20move%20up%20the%20rankings\",\"url\":\"http%3A%2F%2Fwww.espn.com%2Fmlb%2Fstory%2F_%2Fid%2F22933535%2Fplayers-ranked-nos-100-51\"}"]},"test2":{"username":"test2","password":"123","favorites":[]}}}
