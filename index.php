@@ -1,4 +1,5 @@
 <?php
+
 date_default_timezone_set('America/New_York');
 
 if(isset($_COOKIE['lastvisit'])) {
@@ -14,7 +15,7 @@ else {
 }
 ?>
 <!DOCTYPE html>
-<!--<html lang="en">-->
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta content = "text/html; charset = ISO-8859-1" http-equiv = "content-type">
@@ -34,7 +35,6 @@ catch (Exception $e){
 }
 
 session_start();
-$username = "";
 
 if (isset($_POST['username']) and isset($_POST['password']) and !isset($_POST["confirmPassword"])){
     //Get user info
@@ -65,16 +65,24 @@ else if (isset($_POST["username"]) and isset($_POST["password"]) and isset($_POS
             return;
         }
         else{
-            $json_data->USERS->$username->username = addslashes($username);
-            $json_data->USERS->$username->password = addslashes($_POST['password']);
-            $json_data->USERS->$username->favorites = [];
+			/*
+			$username = $_POST['username'];
+			$data = array("username" => addslashes($username), "password" => addslashes($_POST['password']), "favorites" => array());
+            array_push($json_data->USERS, $username);
+			$json_data->USERS=>$username=$data;
+			*/
+			$json_data->USERS[$username] = $data;
+			
+			
+			/*
             $fp = fopen('data.json', 'w');
             fwrite($fp, json_encode($json_data));
             fclose($fp);
 
             $_SESSION['username'] = $username;
             $_SESSION['favs'] = [];
-
+			*/
+	
         }
     }
     else{
@@ -86,7 +94,8 @@ else if(isset($_SESSION['username'])){
 }
 
 else{
-    echo "<meta http-equiv=\"refresh\" content=\"0;URL=login.php\" >";
+  echo "Login pls";
+  //echo "<meta http-equiv=\"refresh\" content=\"0;URL=login.php\" >";
 }
 
 ?>
@@ -106,18 +115,23 @@ else{
             }
 
 
-            function loadJSON(person){
+            function loadJSON(choice){
             var link = "";
-            switch(person) {
+            switch(choice) {
                 case "MLB":
                     link = "http://www.espn.com/espn/rss/MLB/news";
+					init(link);
                     break;
                 case "NHL":
                     link = "http://www.espn.com/espn/rss/NHL/news";
+					init(link);
                     break;
                 default:
                     link = "http://www.espn.com/espn/rss/NBA/news";
+					init(link);
+					break;
             }
+			
             var http_request = new XMLHttpRequest();
             try{
                 // Opera 8.0+, Firefox, Chrome, Safari
@@ -172,8 +186,7 @@ else{
     };
     function init(url){
         //NHL URL for ESPN RSS feed
-        // console.log("Entering Init");
-
+        console.log("Entering Init");
 
         document.querySelector("#content").innerHTML = "<b>Loading news...</b>";
         $("#content").fadeOut(250);
@@ -310,18 +323,19 @@ else{
         <div>
             <ul class="nav">
                 <li class="nav-li">Hello, <?php echo $username?></li>
-
-
-
-                <li class="select_feed">
-                    <select id='option' onchange="getNew();">
-                        <option value='NBA'>NBA</option>
-                        <option value='NHL'>NHL</option>
-                        <option value='MLB'>MLB</option>
-                    </select>
-                </li>
-
-                <li class="nav-li-right">Select Feed:</li><br>
+				
+				<li class="nav-li-right">
+					<div>
+						<input onclick="loadJSON('NBA');" type="checkbox" id="addSource" name="addNBA" value="addNBA">
+						<label style='color: white' for="addSource">NBA</label>
+						<input onclick="loadJSON('NHL');" type="checkbox" id="addSource" name="addNHL" value="addNHL">
+						<label style='color: white' for="addSource">NHL</label>
+						<input onclick="loadJSON('MLB');" type="checkbox" id="addSource" name="addMLB" value="addMLB">
+					</div>
+				</li>
+				<br>
+				
+                
                 <li class="nav-li">Your Favorites: </li>
                 <select onchange='location = this.value;' style='width: 10%;' id="favorites">
 
@@ -334,7 +348,7 @@ else{
 
 
         <div id="header">
-            <h1 class="text-center" id="title">NBA News</h1>
+            <h1 class="text-center" id="title">ESPN News</h1>
 <!--            <img id="logo" />-->
         </div>
         <div id="content" style="width: 70%; margin: auto;" class="">
