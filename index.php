@@ -236,7 +236,7 @@ else{
             //present the item as HTML
             var line  = '<li class="article">';
             line += '<div class="bs-callout bs-callout-danger">';
-            line += "<input type=\"button\" class='fav-txt' onclick='favorite(\"" + encodeURIComponent(title) + "\", \"" + encodeURIComponent(link) + "\");' value=\"" + fav_txt + "\">";
+            line += "<input type=\"button\" class='fav-txt' onclick='favorite(\"" + escape(encodeURIComponent(title)) + "\", \"" + escape(encodeURIComponent(link)) + "\");' value=\"" + fav_txt + "\">";
 
             line += "<h2 class='article-title'>"+title+"</h2>";
             line += '<p class=\'article-title\'><i>'+pubDate+'</i> - <a href="'+link+'"target="_blank">See original</a></p>';
