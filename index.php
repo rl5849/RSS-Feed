@@ -48,7 +48,6 @@ if (isset($_POST['username']) and isset($_POST['password']) and !isset($_POST["c
             else{
 
                 $_SESSION['username'] = $username;
-
                 $_SESSION['favs'] = $json_data->USERS->$username->favorites;
             }
         }
@@ -65,24 +64,22 @@ else if (isset($_POST["username"]) and isset($_POST["password"]) and isset($_POS
             return;
         }
         else{
-			/*
+			
 			$username = $_POST['username'];
 			$data = array("username" => addslashes($username), "password" => addslashes($_POST['password']), "favorites" => array());
-            array_push($json_data->USERS, $username);
+          /*  array_push($json_data->USERS, $username);
 			$json_data->USERS=>$username=$data;
 			*/
 			$json_data->USERS[$username] = $data;
 			
 			
-			/*
+			
             $fp = fopen('data.json', 'w');
             fwrite($fp, json_encode($json_data));
             fclose($fp);
 
             $_SESSION['username'] = $username;
-            $_SESSION['favs'] = [];
-			*/
-	
+            $_SESSION['favs'] = array();
         }
     }
     else{
@@ -331,6 +328,7 @@ else{
 						<input onclick="loadJSON('NHL');" type="checkbox" id="addSource" name="addNHL" value="addNHL">
 						<label style='color: white' for="addSource">NHL</label>
 						<input onclick="loadJSON('MLB');" type="checkbox" id="addSource" name="addMLB" value="addMLB">
+						<label style='color: white' for="addSource">MLB</label>
 					</div>
 				</li>
 				<br>
