@@ -48,6 +48,7 @@ if (isset($_POST['username']) and isset($_POST['password']) and !isset($_POST["c
             else{
 
                 $_SESSION['username'] = $username;
+
                 $_SESSION['favs'] = $json_data->USERS->$username->favorites;
             }
         }
@@ -64,7 +65,7 @@ else if (isset($_POST["username"]) and isset($_POST["password"]) and isset($_POS
             return;
         }
         else{
-			
+
 			$username = $_POST['username'];
 			$data = array("username" => addslashes($username), "password" => addslashes($_POST['password']), "favorites" => array());
           /*  array_push($json_data->USERS, $username);
@@ -73,7 +74,7 @@ else if (isset($_POST["username"]) and isset($_POST["password"]) and isset($_POS
 			$json_data->USERS[$username] = $data;
 			
 			
-			
+
             $fp = fopen('data.json', 'w');
             fwrite($fp, json_encode($json_data));
             fclose($fp);
@@ -98,8 +99,8 @@ else{
 ?>
     <script type = "application/javascript">
             var favs = [<?php
-                    if (isset($_SESSION['favs'])){
-                        foreach($_SESSION['favs'] as $fav){
+                    if (count($json_data->USERS->$username->favorites) > 0){
+                        foreach($json_data->USERS->$username->favorites as $fav){
                             echo "'" . $fav ."',";
                         }
                     }
@@ -245,6 +246,8 @@ else{
 
             html += line;
         }
+
+
         document.querySelector("#content").innerHTML = html;
 
         $("#content").fadeIn(1000);
@@ -313,6 +316,31 @@ else{
         showFavorites();
     })
 
+    function updateSources() {
+
+        var url = "";
+
+        if (!$('#MLB').is(":checked") && !$('#NBA').is(":checked") && !$('#NHL').is(":checked") ) {
+            $('#NBA').checked = true;
+        }
+
+        if ($('#NBA').is(":checked")){
+            url = "http://www.espn.com/espn/rss/NBA/news";
+            $.get(url).done(function(data){xmlLoaded(data);});
+        }
+        if ($('#NHL').is(":checked")){
+            url = "http://www.espn.com/espn/rss/NHL/news";
+            $.get(url).done(function(data){xmlLoaded(data);});
+        }
+        if ($('#MLB').is(":checked")) {
+            url = "http://www.espn.com/espn/rss/MLB/news";
+            $.get(url).done(function (data) {
+                xmlLoaded(data);
+            });
+        }
+
+
+    }
 
 
 
