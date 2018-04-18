@@ -34,6 +34,7 @@ catch (Exception $e){
 }
 
 session_start();
+$username = "";
 
 if (isset($_POST['username']) and isset($_POST['password']) and !isset($_POST["confirmPassword"])){
     //Get user info
