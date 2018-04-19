@@ -67,20 +67,30 @@ else if (isset($_POST["username"]) and isset($_POST["password"]) and isset($_POS
         else{
 
 			$username = $_POST['username'];
-			$data = array("username" => addslashes($username), "password" => addslashes($_POST['password']), "favorites" => array());
-          /*  array_push($json_data->USERS, $username);
-			$json_data->USERS=>$username=$data;
-			*/
-			$json_data->USERS[$username] = $data;
+
+
+            $json_data->USERS->$username = new stdClass();
+            $json_data->USERS->$username->username = $username;
+            $json_data->USERS->$username->password = $_POST['password'];
+            $json_data->USERS->$username->favorites = array();
+
+			//$data = array("username" => addslashes($username), "password" => addslashes($_POST['password']), "favorites" => array());
+            //array_push($json_data->USERS, $username);
+			//$json_data->USERS=>$username=$data;
+
+			//$json_data->USERS[$username] = $data;
 			
 			
+
+
+
 
             $fp = fopen('data.json', 'w');
             fwrite($fp, json_encode($json_data));
             fclose($fp);
 
             $_SESSION['username'] = $username;
-            $_SESSION['favs'] = array();
+
         }
     }
     else{
@@ -99,12 +109,13 @@ else{
 ?>
     <script type = "application/javascript">
             var favs = [<?php
+
                     if (count($json_data->USERS->$username->favorites) > 0){
                         foreach($json_data->USERS->$username->favorites as $fav){
                             echo "'" . $fav ."',";
                         }
                     }
-                    else{echo "";}?>]
+                    ?>]
 
             var favs_urls = [];
             for (i = 0; i < favs.length; i++) {
@@ -231,12 +242,12 @@ else{
                 fav_txt = "Favorite";
             }
 
-
+            var clean_title = encodeURIComponent(title).replace(/'/i, "\\'");
 
             //present the item as HTML
             var line  = '<li class="article">';
             line += '<div class="bs-callout bs-callout-danger">';
-            line += "<input type=\"button\" class='fav-txt' onclick='favorite(\"" + escape(encodeURIComponent(title)) + "\", \"" + escape(encodeURIComponent(link)) + "\");' value=\"" + fav_txt + "\">";
+            line += "<input type=\"button\" class='fav-txt' onclick='favorite(\"" + clean_title + "\", \"" + encodeURIComponent(link) + "\");' value=\"" + fav_txt + "\">";
 
             line += "<h2 class='article-title'>"+title+"</h2>";
             line += '<p class=\'article-title\'><i>'+pubDate+'</i> - <a href="'+link+'"target="_blank">See original</a></p>';
@@ -254,14 +265,6 @@ else{
 
     }
 
-    function getNew() {
-        var e = document.getElementById("option");
-        var strUser = e.options[e.selectedIndex].value;
-        var url = "http://www.espn.com/espn/rss/" + strUser + "/news";
-
-        document.getElementById("title").innerText = strUser + " News"
-        init(url);
-    }
 
     var list = $(".list-group-item");
     for(var i = 0; i < list.length; i++) {
@@ -272,6 +275,8 @@ else{
 
 
     function favorite(title, url) {
+        console.log(title);
+        console.log(url);
         $.ajax({
             type: 'POST',
             url: 'ajax.php',
@@ -317,13 +322,7 @@ else{
     })
 
     function updateSources() {
-
         var url = "";
-
-        if (!$('#MLB').is(":checked") && !$('#NBA').is(":checked") && !$('#NHL').is(":checked") ) {
-            $('#NBA').checked = true;
-        }
-
         if ($('#NBA').is(":checked")){
             url = "http://www.espn.com/espn/rss/NBA/news";
             $.get(url).done(function(data){xmlLoaded(data);});
@@ -338,8 +337,6 @@ else{
                 xmlLoaded(data);
             });
         }
-
-
     }
 
 
@@ -351,11 +348,11 @@ else{
 				
 				<li class="nav-li-right">
 					<div>
-						<input onclick="loadJSON('NBA');" type="checkbox" id="addSource" name="addNBA" value="addNBA">
+						<input onclick="loadJSON('NBA');" type="checkbox" id="NBA" name="addNBA" value="addNBA" checked>
 						<label style='color: white' for="addSource">NBA</label>
-						<input onclick="loadJSON('NHL');" type="checkbox" id="addSource" name="addNHL" value="addNHL">
+						<input onclick="loadJSON('NHL');" type="checkbox" id="NHL" name="addNHL" value="addNHL">
 						<label style='color: white' for="addSource">NHL</label>
-						<input onclick="loadJSON('MLB');" type="checkbox" id="addSource" name="addMLB" value="addMLB">
+						<input onclick="loadJSON('MLB');" type="checkbox" id="MLB" name="addMLB" value="addMLB">
 						<label style='color: white' for="addSource">MLB</label>
 					</div>
 				</li>
