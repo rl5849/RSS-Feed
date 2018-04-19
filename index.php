@@ -275,8 +275,6 @@ else{
 
 
     function favorite(title, url) {
-        console.log(title);
-        console.log(url);
         $.ajax({
             type: 'POST',
             url: 'ajax.php',
