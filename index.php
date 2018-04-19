@@ -36,7 +36,10 @@ catch (Exception $e){
 
 session_start();
 
-if (isset($_POST['username']) and isset($_POST['password']) and !isset($_POST["confirmPassword"])){
+if(isset($_SESSION['username'])){
+    $username = $_SESSION['username'];
+}
+else if (isset($_POST['username']) and isset($_POST['password']) and !isset($_POST["confirmPassword"])){
     //Get user info
     $username = $_POST['username'];
     $password = $_POST['password'];
@@ -65,45 +68,28 @@ else if (isset($_POST["username"]) and isset($_POST["password"]) and isset($_POS
             return;
         }
         else{
-
 			$username = $_POST['username'];
-
 
             $json_data->USERS->$username = new stdClass();
             $json_data->USERS->$username->username = $username;
             $json_data->USERS->$username->password = $_POST['password'];
             $json_data->USERS->$username->favorites = array();
 
-			//$data = array("username" => addslashes($username), "password" => addslashes($_POST['password']), "favorites" => array());
-            //array_push($json_data->USERS, $username);
-			//$json_data->USERS=>$username=$data;
-
-			//$json_data->USERS[$username] = $data;
-			
-			
-
-
-
-
             $fp = fopen('data.json', 'w');
             fwrite($fp, json_encode($json_data));
             fclose($fp);
 
             $_SESSION['username'] = $username;
-
         }
     }
     else{
         echo "<script>alert(\"Passwords don't match\"); window.location = '/RSS_Feed/login.php';</script>";
     }
 }
-else if(isset($_SESSION['username'])){
-    $username = $_SESSION['username'];
-}
+
 
 else{
-  echo "Login pls";
-  //echo "<meta http-equiv=\"refresh\" content=\"0;URL=login.php\" >";
+  echo "<meta http-equiv=\"refresh\" content=\"0;URL=login.php\" >";
 }
 
 ?>
